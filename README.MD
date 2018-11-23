@@ -1,8 +1,8 @@
-### PyGCMS
+# PyGCMS
 
 ## Tools for processing GCMS data
 
-# Usage:
+### Usage:
 
 ```
 from pygcms import build_df
