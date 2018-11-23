@@ -1,6 +1,4 @@
-# PyGCMS
-
-## Tools for processing GCMS data
+# PyGCMS - Tools for processing GCMS data
 
 ### Usage:
 
