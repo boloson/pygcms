@@ -22,13 +22,8 @@ def build_df(file_name, time_as_column=False):
   time_list = np.array(dataset.variables[__TIME_STRING])
 
   mz_values = mz_strings.round().astype(np.int16)
-
-  mass_list = []
   intensity_list = []
   scan_list = []
-
-  intensity_prev = intensity[0]
-  mass_prev = mz_values[0]
 
   mz_max = mz_values.max()
   mz_min = mz_values.min()
