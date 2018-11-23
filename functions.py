@@ -1,11 +1,17 @@
-from netCDF4 import Dataset
 import numpy as np
 import pandas as pd
+from netCDF4 import Dataset
 
 def build_df(file_name, time_as_column=False):
   '''
-  Build intensity matraix dataframe from CDF files
+  Build intensity matraix dataframe
   '''
+  dataset = Dataset(file_name, 'r')
+  
+  __MASS_STRING = "mass_values"
+  __INTENSITY_STRING = "intensity_values"
+  __TIME_STRING = "scan_acquisition_time"
+  
   intensity_values = np.array(dataset.variables[__INTENSITY_STRING])
   intensity_list = []
   intensity_previous = intensity_values[0]
@@ -45,10 +51,10 @@ def build_df(file_name, time_as_column=False):
       time_row[mz - mz_min] = intensity[i]
       mz_prev = mz
   scan_list.append(time_row)   # add last row
-
-  if not time_as_column:  
-    df = pd.DataFrame(scan_list, columns=range(mz_min, mz_max+1), index=time_list)
-  else:
-    df = pd.DataFrame(np.transpose(scan_list), columns=time_list, index=range(mz_min, mz_max+1))
   
+  if time_as_column:
+    df = pd.DataFrame(np.transpose(scan_list), columns=time_list, index=range(mz_min, mz_max+1))
+  else:
+    df = pd.DataFrame(scan_list, columns=range(mz_min, mz_max+1), index=time_list)
+
   return df
