@@ -2,7 +2,6 @@
 
 ### Prerequisite:
 pip install netCDF4
-python 2.7
 
 ### Usage:
 
