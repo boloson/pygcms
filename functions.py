@@ -1,4 +1,6 @@
 from netCDF4 import Dataset
+import numpy as np
+import pandas as pd
 
 def build_df(fname, time_as_column=False, verbose=False):
   dataset = Dataset(fname, 'r')
