@@ -29,7 +29,7 @@ def build_df(fname, time_as_column=False):
 
     start_i = scan_indexes[i]
     num_point = point_counts[i]
-
+#     print start_i, num_point
     if num_point == 0 :
       continue
     time_row =  np.zeros(num_mz)
@@ -48,5 +48,4 @@ def build_df(fname, time_as_column=False):
       df = pd.DataFrame(np.transpose(scan_list), columns=time_list, index=range(mz_min, mz_max+1))
     else:
       df = pd.DataFrame(scan_list, columns=range(mz_min, mz_max+1), index=time_list)
-
-    return df
+  return df
