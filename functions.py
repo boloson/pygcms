@@ -25,8 +25,6 @@ def build_df(fname, time_as_column=False):
   scan_list = []
   time_list = []
 
-  start = time.time()
-
   for i in range(len(scan_indexes)):
 
     start_i = scan_indexes[i]
