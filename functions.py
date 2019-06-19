@@ -1,3 +1,7 @@
+import numpy as np
+import pandas as pd
+from netCDF4 import Dataset  
+
 def build_df(fname, time_as_column=False):
   ''' 
   Parse a ANDI netCDF file to a pandas dataframe 
