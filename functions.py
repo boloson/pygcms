@@ -32,7 +32,7 @@ def build_df(fname, time_as_column=False):
 
   scan_list = []
   time_list = []
-  start = time()
+  
   for i in range(len(scan_indexes)):
     num_point = point_counts[i]
     if num_point == 0:
