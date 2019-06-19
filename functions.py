@@ -1,10 +1,13 @@
-from netCDF4 import Dataset
-import numpy as np
-import pandas as pd
-
-def build_df(fname, time_as_column=False, verbose=False):
-  dataset = Dataset(fname, 'r')
+def build_df(fname, time_as_column=False):
+  ''' 
+  Parse a ANDI netCDF file to a pandas dataframe 
+  fname -- full file name path
+  time_as_column --  use time values as column
   
+  '''
+
+  dataset = Dataset(fname, 'r')
+
   SCAN_INDEX = 'scan_index'
   POINT_COUNT = 'point_count'
   MASS_VALUES = 'mass_values'
@@ -12,7 +15,8 @@ def build_df(fname, time_as_column=False, verbose=False):
   SCAN_ACQ_TIME = 'scan_acquisition_time'
 
   scan_indexes = dataset.variables[SCAN_INDEX]
-  mz_values = dataset.variables[MASS_VALUES]
+  mz_values = np.asarray(dataset.variables[MASS_VALUES])
+  mz_values = np.rint(mz_values).astype(int)
   point_counts =  dataset.variables[POINT_COUNT]
   intensity_values = dataset.variables[INTENSITY_VALUES]
   time_val = np.array([t.data for t in dataset.variables[SCAN_ACQ_TIME]])
@@ -24,27 +28,21 @@ def build_df(fname, time_as_column=False, verbose=False):
 
   scan_list = []
   time_list = []
-
+  start = time()
   for i in range(len(scan_indexes)):
-
-    start_i = scan_indexes[i]
     num_point = point_counts[i]
-    if verbose:
-      print i # , start_i, num_point
-    if num_point == 0 :
+    if num_point == 0:
       continue
-    time_row =  np.zeros(num_mz)
-
-    value_index = start_i
-    for incr in range(num_point):
-      cur_i = start_i + incr
-      mz = int(round(mz_values[cur_i]))
-      intensity_val = intensity_values[cur_i]
-      time_row[mz-mz_min] = time_row[mz-mz_min] + intensity_val
+    start_i = scan_indexes[i]  
+    row_intensity = intensity_values[start_i:start_i+ num_point]
+    row_mz = mz_values[start_i:start_i+ num_point]
+    np_fill_index = row_mz - mz_min
+    time_row = np.zeros(num_mz)
+    np.put(time_row, np_fill_index, row_intensity)
 
     scan_list.append(time_row)
     time_list.append(time_val[i])
-
+  
   if time_as_column:
     df = pd.DataFrame(np.transpose(scan_list), columns=time_list, index=range(mz_min, mz_max+1))
   else:
