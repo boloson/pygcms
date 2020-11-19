@@ -1,12 +1,12 @@
 # PyGCMS - Tools for processing GCMS data
 
 ### Prerequisite:
-pip install netCDF4
+pip install netCDF4 
+
 !git clone https://github.com/boloson/pygcms.git
+
+
 ### Usage:
-
-git clone https://github.com/boloson/pygcms.git
-
 ```
 from pygcms.functions import build_df
 
