@@ -2,11 +2,13 @@
 
 ### Prerequisite:
 pip install netCDF4
-
+!git clone https://github.com/boloson/pygcms.git
 ### Usage:
 
+git clone https://github.com/boloson/pygcms.git
+
 ```
-from pygcms import build_df
+from pygcms.functions import build_df
 
 # build pandas dataframe from cdf file with time as row index and mz as column if time_as_column=False
 
