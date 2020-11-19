@@ -3,7 +3,7 @@
 ### Prerequisite:
 pip install netCDF4 
 
-!git clone https://github.com/boloson/pygcms.git
+git clone https://github.com/boloson/pygcms.git
 
 
 ### Usage:
